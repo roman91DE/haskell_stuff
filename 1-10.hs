@@ -42,3 +42,15 @@ isPalindrom [] = True
 isPalindrom [a] = True
 isPalindrom xs =
   head xs == last xs && isPalindrom (init (tail xs))
+
+
+
+flatten :: [[a]] -> [a]
+flatten xs = flattenAcc [] xs
+  where
+    flattenAcc acc [] = acc
+    flattenAcc acc (x:xs) = flattenAcc (acc ++ x) xs
+
+
+foldFlatten :: [[a]] -> [a]
+foldFlatten = foldr (++) []
