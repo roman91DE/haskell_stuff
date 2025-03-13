@@ -52,5 +52,3 @@ flatten xs = flattenAcc [] xs
     flattenAcc acc (x:xs) = flattenAcc (acc ++ x) xs
 
 
-foldFlatten :: [[a]] -> [a]
-foldFlatten = foldr (++) []

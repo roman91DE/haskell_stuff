@@ -1,9 +1,12 @@
 collatz :: (Integral a) => a -> a
 collatz n
-    | mod n 2 == 0 = n `div` 2
-    | otherwise = (3 * n) + 1
+  | even n = n `div` 2
+  | otherwise = (3 * n) + 1
 
-
-
-conj :: (Integral a) => a -> [a]
-
+collatzSequence :: (Integral a) => a -> [a]
+collatzSequence n = cj [] n
+  where
+    cj :: (Integral a) => [a] -> a -> [a]
+    cj acc n
+      | n == 1 = reverse (n : acc)
+      | otherwise = cj (n : acc) (collatz n)
