@@ -1,7 +1,8 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+
 {-# HLINT ignore "Move guards forward" #-}
 
-import Data.Char (isAscii, isLetter, ord, toLower)
+import Data.Char (isAscii, isLetter, ord, toLower, toUpper)
 import Data.List (nub)
 import Data.Set (fromList)
 
@@ -41,3 +42,22 @@ findEvenIndex arr = if null res then -1 else fst $ head res
     res = [(i, x) | (i, x) <- zip [0 ..] arr, sumFirst i == sumTail i]
     sumFirst i = sum $ take (i + 1) arr
     sumTail i = sum $ drop i arr
+
+toCC :: String -> String
+toCC [] = []
+toCC (x : xs) = toUpper x : map toLower xs
+
+toCCFirst :: String -> String
+toCCFirst [] = []
+toCCFirst (x : xs) = x : map toLower xs
+
+splitOn :: String -> String -> [String]
+splitOn cs = foldr (\x acc -> if x `elem` cs then "" : acc else (x : head acc) : tail acc) [""]
+
+toCamelCase :: String -> String
+toCamelCase str = first ++ rest
+    where
+        allWords = splitOn "_-" str
+        (a, b) = (head allWords, tail allWords)
+        first = toCCFirst a
+        rest = concatMap toCC b
